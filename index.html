@@ -49,7 +49,7 @@
           Number of Participants
           <span class="block text-sm text-gray-400">This event is limited to 1000 users</span>
         </label>
-        <input type="number" id="participants" placeholder="Enter number (e.g., 1000)"
+        <input type="number" id="participants" max="1000" placeholder="Enter number (e.g., 1000)"
           class="w-full p-3 rounded-md bg-gray-700 text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none">
       </div>
       <button onclick="calculate()" 
@@ -89,11 +89,22 @@
       const sensitivityDiv = document.getElementById("sensitivityTable");
       const sensitivityContent = document.getElementById("sensitivityContent");
 
+      // Clear previous results
+      resultsContent.innerHTML = "";
+      sensitivityContent.innerHTML = "";
+      resultsDiv.classList.add("hidden");
+      sensitivityDiv.classList.add("hidden");
+
       // Validation
       if (!airdropPercentage || !fdv || !participants || airdropPercentage <= 0 || fdv <= 0 || participants <= 0) {
         resultsContent.innerHTML = "<p class='text-red-400'>Please enter valid positive numbers for all fields.</p>";
         resultsDiv.classList.remove("hidden");
-        sensitivityDiv.classList.add("hidden");
+        return;
+      }
+
+      if (participants > 1000) {
+        resultsContent.innerHTML = "<p class='text-red-400'>Number of participants cannot exceed 1000.</p>";
+        resultsDiv.classList.remove("hidden");
         return;
       }
 
@@ -104,7 +115,7 @@
       const maxTotalValue = allocationTokens * tokenPrice;
       const maxIndividualValue = maxTotalValue / participants;
 
-      // Results
+      // Display Results
       resultsContent.innerHTML = `
         <p><strong>Total Airdrop Tokens:</strong> ${totalAirdropTokens.toLocaleString()}</p>
         <p><strong>Tokens Allocated to 2.5%:</strong> ${allocationTokens.toLocaleString()}</p>
