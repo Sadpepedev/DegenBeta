@@ -62,11 +62,15 @@
     <div id="results" class="fade-in mt-8 hidden bg-gray-700 p-6 rounded-lg shadow-lg">
       <h3 class="text-2xl font-bold text-blue-300 mb-4">Results</h3>
       <div id="resultsContent"></div>
+      <div id="highlightedValue" class="hidden mt-6 p-4 rounded-lg bg-blue-500 text-white text-center shadow-lg">
+        <p class="text-lg">Estimated Maximum Value Per Participant:</p>
+        <p id="individualValue" class="text-4xl font-extrabold"></p>
+      </div>
     </div>
 
     <!-- Sensitivity Table -->
     <div id="sensitivityTable" class="fade-in mt-8 hidden bg-gray-700 p-6 rounded-lg shadow-lg">
-      <h3 class="text-2xl font-bold text-blue-300 mb-4">FDV Ranges (FDV ± 20%)</h3>
+      <h3 class="text-2xl font-bold text-blue-300 mb-4">FDV Range (± 20%)</h3>
       <div id="sensitivityContent"></div>
     </div>
   </div>
@@ -86,12 +90,15 @@
 
       const resultsDiv = document.getElementById("results");
       const resultsContent = document.getElementById("resultsContent");
+      const highlightedValueDiv = document.getElementById("highlightedValue");
+      const individualValueText = document.getElementById("individualValue");
       const sensitivityDiv = document.getElementById("sensitivityTable");
       const sensitivityContent = document.getElementById("sensitivityContent");
 
       // Clear previous results
       resultsContent.innerHTML = "";
       sensitivityContent.innerHTML = "";
+      highlightedValueDiv.classList.add("hidden");
       resultsDiv.classList.add("hidden");
       sensitivityDiv.classList.add("hidden");
 
@@ -119,9 +126,13 @@
       resultsContent.innerHTML = `
         <p><strong>Total Airdrop Tokens:</strong> ${totalAirdropTokens.toLocaleString()}</p>
         <p><strong>Tokens Allocated to 2.5%:</strong> ${allocationTokens.toLocaleString()}</p>
-        <p><strong>Max Total Value:</strong> $${maxTotalValue.toFixed(2)}</p>
-        <p><strong>Max Individual Value:</strong> $${maxIndividualValue.toFixed(2)} per person</p>
+        <p><strong>Max Total Value:</strong> $${maxTotalValue.toLocaleString(undefined, {minimumFractionDigits: 2})}</p>
       `;
+
+      // Highlight Max Individual Value
+      individualValueText.textContent = `$${maxIndividualValue.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+      highlightedValueDiv.classList.remove("hidden");
+
       resultsDiv.classList.remove("hidden");
 
       // Sensitivity Table
@@ -141,7 +152,7 @@
               return `
                 <tr>
                   <td class="p-2">${(value / 1000000).toLocaleString()}M</td>
-                  <td class="p-2">$${totalValue.toFixed(2)}</td>
+                  <td class="p-2">$${totalValue.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
                 </tr>
               `;
             }).join('')}
