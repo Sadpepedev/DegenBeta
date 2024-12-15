@@ -139,30 +139,31 @@
       resultsDiv.classList.remove("hidden");
 
       // Sensitivity Table
-      const fdvValues = [fdv * 0.8, fdv, fdv * 1.2];
-      sensitivityContent.innerHTML = `
-        <table class="w-full">
-          <thead>
-            <tr>
-              <th class="text-left border-b p-2">FDV ($)</th>
-              <th class="text-left border-b p-2">Max Total Value ($)</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${fdvValues.map(value => {
-              const price = value / totalSupply;
-              const totalValue = allocationTokens * price;
-              return `
-                <tr>
-                  <td class="p-2">${(value / 1000000).toLocaleString()}M</td>
-                  <td class="p-2">$${totalValue.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
-                </tr>
-              `;
-            }).join('')}
-          </tbody>
-        </table>
-      `;
-      sensitivityDiv.classList.remove("hidden");
+const fdvValues = [fdv * 0.8, fdv, fdv * 1.2];
+sensitivityContent.innerHTML = `
+  <table class="w-full">
+    <thead>
+      <tr>
+        <th class="text-left border-b p-2">FDV ($)</th>
+        <th class="text-left border-b p-2">Max Individual Value ($)</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${fdvValues.map(value => {
+        const price = value / totalSupply;
+        const totalValue = allocationTokens * price;
+        const individualValue = totalValue / participants;
+        return `
+          <tr>
+            <td class="p-2">${(value / 1000000).toLocaleString()}M</td>
+            <td class="p-2">$${individualValue.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+          </tr>
+        `;
+      }).join('')}
+    </tbody>
+  </table>
+`;
+sensitivityDiv.classList.remove("hidden");
     }
   </script>
 </body>
