@@ -39,7 +39,7 @@
       </div>
       <div>
         <label for="fdv" class="block mb-2 font-semibold text-blue-300">
-          Speculated FDV (Millions $)
+          Speculated FDV (Millions $) Lyra was 135 Million at the time of trading pause.
         </label>
         <input type="number" id="fdv" max="100" placeholder="Enter FDV in millions (e.g., 135)" 
           class="w-full p-3 rounded-md bg-gray-700 text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none">
@@ -63,11 +63,11 @@
       <h3 class="text-2xl font-bold text-blue-300 mb-4">Results</h3>
       <div id="resultsContent"></div>
       <div id="highlightedValue" class="hidden mt-6 p-4 rounded-lg bg-blue-500 text-white text-center shadow-lg">
-        <p class="text-lg">Estimated Maximum Value Per Participant:</p>
+        <p class="text-lg">Estimated Maximum Value Per Participant upon successfully completing the prerequisites:</p>
         <p id="individualValue" class="text-4xl font-extrabold"></p>
       </div>
       <div id="disclaimer" class="mt-6 text-gray-400 italic">
-        <p>These are all hypothetical scenarios and do not equate to guaranteed rewards. We are not associated with Etherfi or Derive.</p>
+        <p>These are all hypothetical scenarios and do not equate to guaranteed rewards. I am not associated with Etherfi or Derive.</p>
       </div>
     </div>
 
@@ -139,7 +139,7 @@
       resultsDiv.classList.remove("hidden");
 
       // Sensitivity Table
-const fdvValues = [fdv * 0.8, fdv, fdv * 1.2];
+const fdvValues = [fdv * 0.9, fdv, fdv * 1.1];
 sensitivityContent.innerHTML = `
   <table class="w-full">
     <thead>
