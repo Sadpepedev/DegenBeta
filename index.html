@@ -55,7 +55,7 @@
       <div>
         <label for="partnerProtocols" class="block mb-2 font-semibold text-blue-300">
           Partner Protocols
-          <span class="block text-sm text-gray-400">How many protocols are you participating with?</span>
+          <span class="block text-sm text-gray-400">Derive has confirmed that each of their partners are additive</span>
         </label>
         <select id="partnerProtocols" class="w-full p-3 rounded-md bg-gray-700 text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none">
           <option value="1" selected>1</option>
@@ -137,7 +137,7 @@
       `;
 
       // Highlight Max Individual Value Per Protocol
-      individualValueText.textContent = `$${valuePerProtocol.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+      individualValueText.textContent = `$${valuePerProtocol.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
       highlightedValueDiv.classList.remove("hidden");
 
       resultsDiv.classList.remove("hidden");
