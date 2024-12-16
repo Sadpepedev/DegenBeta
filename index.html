@@ -24,10 +24,11 @@
     <div class="flex justify-center items-center space-x-4">
       <!-- Derive Logo -->
       <img src="https://raw.githubusercontent.com/Sadpepedev/assets/57bba48f4af0265888b5e257fb9a29e48d691359/Derive-Colour-White_Logo-Horisontal.png" alt="Derive Logo" class="h-16 w-auto">
+      <!-- "X" Between Logos -->
+      <span class="text-blue-400 text-3xl font-extrabold">X</span>
       <!-- Etherfi Logo -->
       <img src="https://raw.githubusercontent.com/Sadpepedev/assets/57bba48f4af0265888b5e257fb9a29e48d691359/logo-colour-landscape.png" alt="Etherfi Logo" class="h-16 w-auto">
     </div>
-    <h1 class="text-4xl font-extrabold text-blue-400 mt-4">Derive X Etherfi Event</h1>
     <p class="text-gray-400 mt-2">Calculate potential DRV bonuses</p>
 
     <!-- Partnership Page Link -->
@@ -72,47 +73,4 @@
           <span class="block text-sm text-gray-400">How many protocols are you participating with?</span>
         </label>
         <select id="partnerProtocols" class="w-full p-3 rounded-md bg-gray-700 text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none">
-          <option value="1" selected>1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
-      </div>
-      <button onclick="calculate()" 
-        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-md transition">
-        Calculate
-      </button>
-    </div>
-
-    <!-- Results -->
-    <div id="results" class="fade-in mt-8 hidden bg-gray-700 p-6 rounded-lg shadow-lg">
-      <h3 class="text-2xl font-bold text-blue-300 mb-4">Results</h3>
-      <div id="resultsContent"></div>
-      <div id="highlightedValue" class="hidden mt-6 p-4 rounded-lg bg-blue-500 text-white text-center shadow-lg">
-        <p class="text-lg">Estimated maximum value per protocol participated:</p>
-        <p id="individualValue" class="text-4xl font-extrabold"></p>
-      </div>
-      <div id="disclaimer" class="mt-6 text-gray-400 italic">
-        <p>These are all hypothetical scenarios and do not equate to guaranteed rewards. This website is not associated with Etherfi or Derive.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="mt-10 text-center text-gray-500">
-    Built by <a href="https://x.com/Dustybeerbong" target="_blank" class="text-blue-400 hover:underline">Sadpepe.exe</a>
-  </footer>
-
-  <!-- Script -->
-  <script>
-    function calculate() {
-      const totalSupply = 1000000000; // Total supply of tokens
-      const airdropPercentage = parseFloat(document.getElementById("airdropPercentage").value);
-      const fdv = parseFloat(document.getElementById("fdv").value) * 1000000; // Convert FDV to full value
-      const participants = parseInt(document.getElementById("participants").value);
-      const partnerProtocols = parseInt(document.getElementById("partnerProtocols").value); // Multiplier
-
-      const resultsDiv = document.getElementById("results");
-      const resultsContent = document.getElementById("resultsContent");
-      const highlightedValueDiv = document.getElementById("highlightedValue");
-      const individualValueText = document.getElementById("in
+    
