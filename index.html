@@ -27,13 +27,13 @@
            alt="Derive Logo" 
            class="h-20 max-w-xs object-contain">
     </div>
-    <p class="text-gray-400 mt-4">Calculate Your Potential DRV Bonuses</p>
+    <p class="text-gray-400 mt-4">Calculate potential DRV bonuses</p>
 
     <!-- Partnership Page Link -->
     <div class="mt-6">
       <a href="https://www.derive.xyz/drv" target="_blank"
         class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md transition">
-        Visit Derive Partnership Page For More Info
+        Visit Derive Partnership Page
       </a>
     </div>
   </header>
@@ -59,10 +59,10 @@
       </div>
       <div>
         <label for="participants" class="block mb-2 font-semibold text-blue-300">
-          Estimated Number of Participants
+          Number of Participants
           <span class="block text-sm text-gray-400">This event is limited to 4000 users</span>
         </label>
-        <input type="number" id="participants" max="4000" placeholder="Enter number (e.g., 1750)"
+        <input type="number" id="participants" max="4000" placeholder="Enter number (e.g., 2430)"
           class="w-full p-3 rounded-md bg-gray-700 text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none">
       </div>
       <div>
@@ -88,7 +88,7 @@
       <h3 class="text-2xl font-bold text-blue-300 mb-4">Results</h3>
       <div id="resultsContent"></div>
       <div id="highlightedValue" class="hidden mt-6 p-4 rounded-lg bg-blue-500 text-white text-center shadow-lg">
-        <p class="text-lg">Estimated maximum value per protocol participated:</p>
+        <p class="text-lg">Estimated maximum value (scaled by protocols participated):</p>
         <p id="individualValue" class="text-4xl font-extrabold"></p>
       </div>
       <div id="disclaimer" class="mt-6 text-gray-400 italic">
@@ -139,8 +139,7 @@
       const allocationTokens = totalAirdropTokens * 0.025;
       const tokenPrice = fdv / totalSupply;
       const maxTotalValue = allocationTokens * tokenPrice;
-      const maxIndividualValue = maxTotalValue / participants; // Keep as 1x for results
-      const valuePerProtocol = maxIndividualValue / partnerProtocols; // Adjusted for protocols
+      const maxIndividualValue = (maxTotalValue / participants) * partnerProtocols; // Adjusted for protocols
 
       // Display Results
       resultsContent.innerHTML = `
@@ -149,8 +148,8 @@
         <p><strong>Max Total Value:</strong> $${maxTotalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
       `;
 
-      // Highlight Max Individual Value Per Protocol
-      individualValueText.textContent = `$${valuePerProtocol.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+      // Highlight Max Individual Value (Scaled)
+      individualValueText.textContent = `$${maxIndividualValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
       highlightedValueDiv.classList.remove("hidden");
 
       resultsDiv.classList.remove("hidden");
