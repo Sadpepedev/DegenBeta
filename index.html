@@ -21,8 +21,22 @@
 
   <!-- Header -->
   <header class="bg-gray-800 text-center py-8 shadow-lg">
-    <h1 class="text-4xl font-extrabold text-blue-400">Derive X Etherfi Event</h1>
+    <div class="flex justify-center items-center space-x-4">
+      <!-- Derive Logo -->
+      <img src="https://raw.githubusercontent.com/Sadpepedev/assets/57bba48f4af0265888b5e257fb9a29e48d691359/Derive-Colour-White_Logo-Horisontal.png" alt="Derive Logo" class="h-16 w-auto">
+      <!-- Etherfi Logo -->
+      <img src="https://raw.githubusercontent.com/Sadpepedev/assets/57bba48f4af0265888b5e257fb9a29e48d691359/logo-colour-landscape.png" alt="Etherfi Logo" class="h-16 w-auto">
+    </div>
+    <h1 class="text-4xl font-extrabold text-blue-400 mt-4">Derive X Etherfi Event</h1>
     <p class="text-gray-400 mt-2">Calculate potential DRV bonuses</p>
+
+    <!-- Partnership Page Link -->
+    <div class="mt-6">
+      <a href="https://www.derive.xyz/drv" target="_blank"
+        class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md transition">
+        Visit Derive Partnership Page
+      </a>
+    </div>
   </header>
 
   <!-- Main Container -->
@@ -46,16 +60,16 @@
       </div>
       <div>
         <label for="participants" class="block mb-2 font-semibold text-blue-300">
-          Number of Participants, Assuming 1000 Max Per Partnership
-          <span class="block text-sm text-gray-400">This event is limited to 4000 users</span>
+          Number of Participants
+          <span class="block text-sm text-gray-400">This event is limited to 1000 users</span>
         </label>
-        <input type="number" id="participants" max="4000" placeholder="Enter number (e.g., 2200)"
+        <input type="number" id="participants" max="1000" placeholder="Enter number (e.g., 1000)"
           class="w-full p-3 rounded-md bg-gray-700 text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none">
       </div>
       <div>
         <label for="partnerProtocols" class="block mb-2 font-semibold text-blue-300">
           Partner Protocols
-          <span class="block text-sm text-gray-400">Derive has confirmed that each of their partners promotions are additive</span>
+          <span class="block text-sm text-gray-400">How many protocols are you participating with?</span>
         </label>
         <select id="partnerProtocols" class="w-full p-3 rounded-md bg-gray-700 text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none">
           <option value="1" selected>1</option>
@@ -101,47 +115,4 @@
       const resultsDiv = document.getElementById("results");
       const resultsContent = document.getElementById("resultsContent");
       const highlightedValueDiv = document.getElementById("highlightedValue");
-      const individualValueText = document.getElementById("individualValue");
-
-      // Clear previous results
-      resultsContent.innerHTML = "";
-      highlightedValueDiv.classList.add("hidden");
-      resultsDiv.classList.add("hidden");
-
-      // Validation
-      if (!airdropPercentage || !fdv || !participants || airdropPercentage <= 0 || fdv <= 0 || participants <= 0) {
-        resultsContent.innerHTML = "<p class='text-red-400'>Please enter valid positive numbers for all fields.</p>";
-        resultsDiv.classList.remove("hidden");
-        return;
-      }
-
-      if (participants > 1000) {
-        resultsContent.innerHTML = "<p class='text-red-400'>Number of participants cannot exceed 1000.</p>";
-        resultsDiv.classList.remove("hidden");
-        return;
-      }
-
-      // Calculations
-      const totalAirdropTokens = (totalSupply * airdropPercentage) / 100;
-      const allocationTokens = totalAirdropTokens * 0.025;
-      const tokenPrice = fdv / totalSupply;
-      const maxTotalValue = allocationTokens * tokenPrice;
-      const maxIndividualValue = maxTotalValue / participants; // Keep as 1x for results
-      const valuePerProtocol = maxIndividualValue / partnerProtocols; // Adjusted for protocols
-
-      // Display Results
-      resultsContent.innerHTML = `
-        <p><strong>Total Airdrop Tokens:</strong> ${totalAirdropTokens.toLocaleString()}</p>
-        <p><strong>Tokens Allocated to 2.5%:</strong> ${allocationTokens.toLocaleString()}</p>
-        <p><strong>Max Total Value:</strong> $${maxTotalValue.toLocaleString(undefined, {minimumFractionDigits: 2})}</p>
-      `;
-
-      // Highlight Max Individual Value Per Protocol
-      individualValueText.textContent = `$${valuePerProtocol.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-      highlightedValueDiv.classList.remove("hidden");
-
-      resultsDiv.classList.remove("hidden");
-    }
-  </script>
-</body>
-</html>
+      const individualValueText = document.getElementById("in
