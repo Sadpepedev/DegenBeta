@@ -75,18 +75,12 @@
       <h3 class="text-2xl font-bold text-blue-300 mb-4">Results</h3>
       <div id="resultsContent"></div>
       <div id="highlightedValue" class="hidden mt-6 p-4 rounded-lg bg-blue-500 text-white text-center shadow-lg">
-        <p class="text-lg">Estimated maximum value per valid participant upon successfully completing the prerequisites:</p>
+        <p class="text-lg">Estimated maximum value per protocol participated:</p>
         <p id="individualValue" class="text-4xl font-extrabold"></p>
       </div>
       <div id="disclaimer" class="mt-6 text-gray-400 italic">
-        <p>These are all hypothetical scenarios and do not equate to guaranteed rewards. This website is associated with Etherfi or Derive.</p>
+        <p>These are all hypothetical scenarios and do not equate to guaranteed rewards. This website is not associated with Etherfi or Derive.</p>
       </div>
-    </div>
-
-    <!-- Sensitivity Table -->
-    <div id="sensitivityTable" class="fade-in mt-8 hidden bg-gray-700 p-6 rounded-lg shadow-lg">
-      <h3 class="text-2xl font-bold text-blue-300 mb-4">FDV Range (± 10%)</h3>
-      <div id="sensitivityContent"></div>
     </div>
   </div>
 
@@ -108,15 +102,11 @@
       const resultsContent = document.getElementById("resultsContent");
       const highlightedValueDiv = document.getElementById("highlightedValue");
       const individualValueText = document.getElementById("individualValue");
-      const sensitivityDiv = document.getElementById("sensitivityTable");
-      const sensitivityContent = document.getElementById("sensitivityContent");
 
       // Clear previous results
       resultsContent.innerHTML = "";
-      sensitivityContent.innerHTML = "";
       highlightedValueDiv.classList.add("hidden");
       resultsDiv.classList.add("hidden");
-      sensitivityDiv.classList.add("hidden");
 
       // Validation
       if (!airdropPercentage || !fdv || !participants || airdropPercentage <= 0 || fdv <= 0 || participants <= 0) {
@@ -136,47 +126,21 @@
       const allocationTokens = totalAirdropTokens * 0.025;
       const tokenPrice = fdv / totalSupply;
       const maxTotalValue = allocationTokens * tokenPrice;
-      const maxIndividualValue = (maxTotalValue / participants) * partnerProtocols; // Apply multiplier
+      const maxIndividualValue = maxTotalValue / participants; // Keep as 1x for results
+      const valuePerProtocol = maxIndividualValue / partnerProtocols; // Adjusted for protocols
 
       // Display Results
       resultsContent.innerHTML = `
         <p><strong>Total Airdrop Tokens:</strong> ${totalAirdropTokens.toLocaleString()}</p>
         <p><strong>Tokens Allocated to 2.5%:</strong> ${allocationTokens.toLocaleString()}</p>
-        <p><strong>Max Total Value (adjusted for protocols):</strong> $${(maxTotalValue * partnerProtocols).toLocaleString(undefined, {minimumFractionDigits: 2})}</p>
+        <p><strong>Max Total Value:</strong> $${maxTotalValue.toLocaleString(undefined, {minimumFractionDigits: 2})}</p>
       `;
 
-      // Highlight Max Individual Value
-      individualValueText.textContent = `$${maxIndividualValue.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+      // Highlight Max Individual Value Per Protocol
+      individualValueText.textContent = `$${valuePerProtocol.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
       highlightedValueDiv.classList.remove("hidden");
 
       resultsDiv.classList.remove("hidden");
-
-      // Sensitivity Table
-      const fdvValues = [fdv * 0.9 * partnerProtocols, fdv * partnerProtocols, fdv * 1.1 * partnerProtocols]; // Scale FDV range
-      sensitivityContent.innerHTML = `
-        <table class="w-full">
-          <thead>
-            <tr>
-              <th class="text-left border-b p-2">FDV ($)</th>
-              <th class="text-left border-b p-2">Max Individual Value ($)</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${fdvValues.map(value => {
-              const price = value / totalSupply;
-              const totalValue = allocationTokens * price;
-              const individualValue = totalValue / participants;
-              return `
-                <tr>
-                  <td class="p-2">${(value / 1000000).toLocaleString()}M</td>
-                  <td class="p-2">$${(individualValue * partnerProtocols).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
-                </tr>
-              `;
-            }).join('')}
-          </tbody>
-        </table>
-      `;
-      sensitivityDiv.classList.remove("hidden");
     }
   </script>
 </body>
