@@ -3,71 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fuel Seed Round ROI Calculator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #1a202c;
-      color: #e2e8f0;
-    }
-    .container {
-      max-width: 600px;
-      margin: 2rem auto;
-      padding: 1rem;
-      background: #2d3748;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    input, button {
-      width: 100%;
-      margin: 0.5rem 0;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-    input {
-      background: #4a5568;
-      color: #fff;
-    }
-    button {
-      background: #3182ce;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #2b6cb0;
-    }
-    .result {
-      margin-top: 1rem;
-      padding: 1rem;
-      background: #4a5568;
-      border-radius: 4px;
-    }
-  </style>
+  <title>Legion ROI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="container">
-    <h1>Fuel Seed Round ROI Calculator</h1>
-    <p>Enter your initial investment and adjust the multiplier to calculate your ROI.</p>
+<body class="bg-black text-gray-200 font-sans">
+  <div class="container mx-auto mt-12 px-6 py-8 bg-gray-900 rounded-lg shadow-lg max-w-md">
+    <h1 class="text-2xl font-bold text-center text-green-400 mb-4">Legion Fuel Investment ROI Calculator</h1>
+    <p class="text-sm text-center text-gray-400 mb-6">Enter your investment, adjust the multiplier, and view token price and ROI.</p>
 
     <!-- Input Fields -->
-    <label for="investment">Initial Investment ($):</label>
-    <input type="number" id="investment" placeholder="Enter your investment">
+    <div class="space-y-4">
+      <div>
+        <label for="investment" class="block text-green-400 font-semibold mb-1">Initial Investment ($):</label>
+        <input type="number" id="investment" placeholder="Enter your investment" class="w-full p-2 rounded-md bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400">
+      </div>
 
-    <label for="multiplier">Multiplier (1.2x to 15x):</label>
-    <input type="range" id="multiplier" min="1.2" max="15" step="0.2" value="1.2" oninput="updateMultiplierLabel()">
-    <p>Current Multiplier: <span id="multiplierLabel">1.2</span>x</p>
+      <div>
+        <label for="multiplier" class="block text-green-400 font-semibold mb-1">Multiplier (1.2x to 40x):</label>
+        <input type="range" id="multiplier" min="1.2" max="40" step="0.2" value="1.2" oninput="updateMultiplierLabel()" class="w-full h-2 rounded-lg appearance-none bg-green-500">
+        <p class="text-sm mt-2 text-gray-400">Current Multiplier: <span id="multiplierLabel" class="text-green-400 font-bold">1.2</span>x</p>
+      </div>
 
-    <button onclick="calculateROI()">Calculate ROI</button>
+      <div>
+        <p class="text-sm text-gray-400">FDV Scaled with Multiplier: <span id="fdvScaled" class="text-green-400 font-bold">$240,000,000</span></p>
+        <p class="text-sm text-gray-400">Token Price: <span id="tokenPrice" class="text-green-400 font-bold">$0.02</span></p>
+      </div>
+
+      <button onclick="calculateROI()" class="w-full py-2 bg-green-500 hover:bg-green-400 text-black font-bold rounded-md shadow-md transition-transform transform hover:-translate-y-1">Calculate ROI</button>
+    </div>
 
     <!-- Results -->
-    <div id="results" class="result" style="display: none;">
-      <p><strong>Initial Investment:</strong> $<span id="initialInvestment"></span></p>
-      <p><strong>FDV Balance:</strong> $<span id="fdvBalance"></span></p>
-      <p><strong>ROI:</strong> $<span id="roi"></span></p>
+    <div id="results" class="mt-6 p-4 bg-gray-800 rounded-md shadow-md hidden">
+      <p class="text-sm text-gray-400"><strong class="text-green-400">Initial Investment:</strong> $<span id="initialInvestment" class="text-gray-200"></span></p>
+      <p class="text-sm text-gray-400"><strong class="text-green-400">Total Value:</strong> $<span id="fdvBalance" class="text-gray-200"></span></p>
+      <p class="text-sm text-gray-400"><strong class="text-green-400">Total ROI:</strong> $<span id="roi" class="text-gray-200"></span></p>
     </div>
   </div>
 
@@ -79,6 +48,10 @@
     function updateMultiplierLabel() {
       const multiplier = document.getElementById("multiplier").value;
       document.getElementById("multiplierLabel").textContent = multiplier;
+      const fdvScaled = FDV * multiplier;
+      const tokenPrice = fdvScaled / TOTAL_TOKENS;
+      document.getElementById("fdvScaled").textContent = `$${fdvScaled.toLocaleString()}`;
+      document.getElementById("tokenPrice").textContent = `$${tokenPrice.toFixed(4)}`;
     }
 
     function calculateROI() {
@@ -93,6 +66,7 @@
       // Calculate FDV balance
       const totalTokensPurchased = initialInvestment / TOKEN_COST;
       const fdvBalance = totalTokensPurchased * (FDV / TOTAL_TOKENS) * multiplier;
+      const tokenPrice = (FDV * multiplier) / TOTAL_TOKENS;
 
       // Calculate ROI
       const roi = fdvBalance - initialInvestment;
@@ -103,7 +77,7 @@
       document.getElementById("roi").textContent = roi.toFixed(2);
 
       // Show results
-      document.getElementById("results").style.display = "block";
+      document.getElementById("results").classList.remove("hidden");
     }
   </script>
 </body>
